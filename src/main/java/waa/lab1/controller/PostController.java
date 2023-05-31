@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import waa.lab1.dto.PostDTO;
+import waa.lab1.dto.PostV2DTO;
 import waa.lab1.service.PostService;
 
 import java.util.List;
@@ -19,6 +20,12 @@ public class PostController {
     @GetMapping
     public List<PostDTO> getAll(){
         return postService.getAll();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(headers = {"X-API-VERSION=v1"})
+    public List<PostV2DTO> getAllV2(){
+        return postService.getAllV2();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -37,6 +44,11 @@ public class PostController {
     @DeleteMapping("/{id}")
     public void deletebyId(@PathVariable("id")Long id){
         postService.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    public void updatePost(@PathVariable("id") Long id,@RequestBody PostDTO postDTO){
+        postService.updatePost(postDTO,id);
     }
 
 }
