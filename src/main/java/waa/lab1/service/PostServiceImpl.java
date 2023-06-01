@@ -28,6 +28,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<PostDTO> getAllByAuthor(String author) {
+        return postMapper.toDtoList(postRepo.getAllByAuthor(author));
+    }
+
+    @Override
     public void deleteById(long id) {
         postRepo.deleteById(id);
     }

@@ -6,6 +6,7 @@ import waa.lab1.domain.Post;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class PostRepoImpl implements PostRepo{
@@ -25,6 +26,11 @@ public class PostRepoImpl implements PostRepo{
     @Override
     public List<Post> getAll() {
         return db;
+    }
+
+    @Override
+    public List<Post> getAllByAuthor(String author) {
+        return db.stream().filter(p -> p.getAuthor().equals(author)).collect(Collectors.toList());
     }
 
     @Override

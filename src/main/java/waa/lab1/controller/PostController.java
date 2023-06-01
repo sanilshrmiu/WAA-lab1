@@ -2,6 +2,7 @@ package waa.lab1.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import waa.lab1.dto.PostDTO;
 import waa.lab1.dto.PostV2DTO;
@@ -18,8 +19,8 @@ public class PostController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<PostDTO> getAll(){
-        return postService.getAll();
+    public List<PostDTO> getAll(@RequestParam(value = "author",required = false)String author){
+        return StringUtils.isEmpty(author) ? postService.getAll() : postService.getAllByAuthor(author);
     }
 
     @ResponseStatus(HttpStatus.OK)

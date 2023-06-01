@@ -11,6 +11,8 @@ public interface PostRepo {
 
     List<Post> getAll();
 
+    List<Post> getAllByAuthor(String author);
+
     void deleteById(long id);
 
     Post getById(long id);

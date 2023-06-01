@@ -13,6 +13,8 @@ public interface PostService {
 
     List<PostDTO> getAll();
 
+    List<PostDTO> getAllByAuthor(String author);
+
     void deleteById(long id);
 
     PostDTO getById(long id);
