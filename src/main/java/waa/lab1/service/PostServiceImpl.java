@@ -2,11 +2,11 @@ package waa.lab1.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import waa.lab1.domain.Post;
 import waa.lab1.dto.PostDTO;
 import waa.lab1.dto.PostV2DTO;
 import waa.lab1.mapper.PostMapper;
-import waa.lab1.repo.PostRepo;
+import waa.lab1.repo.PostRepository;
+import waa.lab1.repo.UsersRepository;
 
 import java.util.List;
 
@@ -14,22 +14,30 @@ import java.util.List;
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
 
-    private final PostRepo postRepo;
+    private final PostRepository postRepo;
     private final PostMapper postMapper;
+    private final UsersRepository usersRepository;
 
     @Override
-    public Post save(PostDTO post) {
-        return postRepo.save(postMapper.toEntity(post));
+    public PostDTO save(PostDTO post) {
+        var savedPost = postRepo.save(postMapper.toEntity(post));
+        var userOptional = usersRepository.findById(post.userId());
+        if (userOptional.isPresent()){
+            var user = userOptional.get();
+            user.getPosts().add(savedPost);
+            usersRepository.save(user);
+        }
+        return postMapper.toDto(savedPost);
     }
 
     @Override
     public List<PostDTO> getAll() {
-        return postMapper.toDtoList(postRepo.getAll());
+        return postMapper.toDtoList(postRepo.findAll());
     }
 
     @Override
     public List<PostDTO> getAllByAuthor(String author) {
-        return postMapper.toDtoList(postRepo.getAllByAuthor(author));
+        return postMapper.toDtoList(postRepo.findByAuthor(author));
     }
 
     @Override
@@ -53,7 +61,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostV2DTO> getAllV2() {
-        return postMapper.toDtoListV2(postRepo.getAll());
+        return postMapper.toDtoListV2(postRepo.findAll());
     }
 
 }

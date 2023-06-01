@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface PostService {
 
-    Post save(PostDTO post);
+    PostDTO save(PostDTO post);
 
     List<PostDTO> getAll();
 
