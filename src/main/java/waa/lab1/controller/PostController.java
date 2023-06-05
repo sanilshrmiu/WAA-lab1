@@ -56,7 +56,7 @@ public class PostController {
         postService.updatePost(postDTO,id);
     }
 
-    @PostMapping("/{id}/comment/")
+    @PostMapping("/{id}/comments/")
     public void postComment(@PathVariable("id") Long postId, @RequestBody CommentDTO commentDTO){
         commentService.postComment(commentDTO,postId);
     }
