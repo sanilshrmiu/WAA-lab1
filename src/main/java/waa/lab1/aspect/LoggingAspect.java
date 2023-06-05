@@ -21,7 +21,8 @@ public class LoggingAspect {
 
     private final LoggerRepository loggerRepository;
     private final StaticContext staticContext;
-    @Pointcut("execution(* waa.lab1..controller..*(..))")
+
+    @Pointcut("execution(* waa.lab1.controller..*(..))")
     public void logPointcutWithExecution(){}
 
     @Before("logPointcutWithExecution()")

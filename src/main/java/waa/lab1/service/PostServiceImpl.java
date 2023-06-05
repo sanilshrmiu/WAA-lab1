@@ -1,5 +1,6 @@
 package waa.lab1.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import waa.lab1.dto.PostDTO;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepo;
@@ -22,13 +24,15 @@ public class PostServiceImpl implements PostService {
     private final UsersMapper usersMapper;
 
     @Override
-    public PostDTO save(PostDTO post) {
+    public PostDTO save(PostDTO post) throws Exception {
         var savedPost = postRepo.save(postMapper.toEntity(post));
         var userOptional = usersRepository.findById(post.userId());
         if (userOptional.isPresent()){
             var user = userOptional.get();
             user.getPosts().add(savedPost);
             usersRepository.save(user);
+        }else {
+            throw new Exception("User not found");
         }
         return postMapper.toDto(savedPost);
     }

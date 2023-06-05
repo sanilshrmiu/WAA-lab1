@@ -35,7 +35,7 @@ public class PostController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void save(@RequestBody PostDTO postDTO){
+    public void save(@RequestBody PostDTO postDTO) throws Exception {
         postService.save(postDTO);
     }
 
