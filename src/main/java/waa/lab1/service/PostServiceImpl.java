@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import waa.lab1.dto.PostDTO;
 import waa.lab1.dto.PostV2DTO;
+import waa.lab1.dto.UsersDTO;
 import waa.lab1.mapper.PostMapper;
+import waa.lab1.mapper.UsersMapper;
 import waa.lab1.repo.PostRepository;
 import waa.lab1.repo.UsersRepository;
 
@@ -17,6 +19,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepo;
     private final PostMapper postMapper;
     private final UsersRepository usersRepository;
+    private final UsersMapper usersMapper;
 
     @Override
     public PostDTO save(PostDTO post) {
@@ -62,6 +65,16 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostV2DTO> getAllV2() {
         return postMapper.toDtoListV2(postRepo.findAll());
+    }
+
+    @Override
+    public List<PostDTO> getAllByTitle(String title) {
+        return postMapper.toDtoList(postRepo.findByTitle(title));
+    }
+
+    @Override
+    public List<UsersDTO> findUserByPostTitle(String title) {
+        return usersMapper.toDtoList(usersRepository.findByPostTitle(title));
     }
 
 }

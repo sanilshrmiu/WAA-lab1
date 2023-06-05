@@ -3,6 +3,7 @@ package waa.lab1.service;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import waa.lab1.domain.Users;
 import waa.lab1.dto.UsersDTO;
 import waa.lab1.mapper.UsersMapper;
 import waa.lab1.repo.UsersRepository;
@@ -54,6 +55,12 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public List<UsersDTO> findByPostsGreaterThanOne(){
         return usersMapper.toDtoList(usersRepository.findByPostsGreaterThan());
+    }
+
+    @Override
+    public List<UsersDTO> findByPostsGreaterThanN(Integer n){
+        var num = n!=null?n:0;
+        return usersMapper.toDtoList(usersRepository.findByPostsGreaterThanN(num));
     }
 
 }
