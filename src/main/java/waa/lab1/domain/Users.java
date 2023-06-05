@@ -22,4 +22,7 @@ public class Users {
     @JoinColumn(name = "user_id")
     private List<Post> posts;
 
+    public Users(Long id) {
+        this.id = id;
+    }
 }

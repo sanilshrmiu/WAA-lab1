@@ -2,6 +2,7 @@ package waa.lab1.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import waa.lab1.aspect.annotation.ExecutionTime;
 import waa.lab1.dto.CommentDTO;
 import waa.lab1.dto.PostDTO;
 import waa.lab1.dto.UsersDTO;
@@ -31,6 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @ExecutionTime
     UsersDTO findById(@PathVariable("id")Long id){
         return usersService.findById(id);
     }
