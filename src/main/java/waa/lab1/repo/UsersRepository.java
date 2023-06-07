@@ -20,4 +20,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     @Query("FROM Users u join Post p where p.title= :title")
     List<Users> findByPostTitle(@Param("title") String title);
 
+    Users findByEmail(String username);
+
 }
